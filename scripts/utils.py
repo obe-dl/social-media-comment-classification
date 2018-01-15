@@ -1,3 +1,6 @@
+from datetime import datetime
+import matplotlib.pyplot as plt
+
 import keras.backend as K
 
 
@@ -66,3 +69,38 @@ def get_activations(model, layer, x_batch):
                                       [model.layers[layer].output, ])
     activations = get_activations_func([x_batch, 0])
     return activations[0]
+
+
+def plot_accuracy(history):
+    plt.plot(history['acc'])
+    plt.plot(history['val_acc'])
+    plt.title('Model accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig("cnn_acc_" + datetime.now().strftime("%s"))
+    plt.clf()
+
+
+def plot_loss(history):
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    plt.title('Model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig("cnn_loss_" + datetime.now().strftime("%s"))
+    plt.clf()
+
+def read_data(first_dataset_path, second_dataset_path):
+    # Read datasets and assign labels
+    print("Load data..")
+
+    first_dataset = open(first_dataset_path).read().lower().split('\n')
+    second_dataset = open(second_dataset_path).read().lower().split('\n')
+
+    texts = first_dataset + second_dataset
+    labels = [0] * len(first_dataset) + [1] * len(second_dataset)
+    print("Total number of texts: {}".format(len(texts)))
+
+    return texts, labels
