@@ -12,6 +12,7 @@ import time
 from utils import fmeasure, precision, recall, get_activations
 
 
+# Example usages:
 # python classifier.py visualize tr ../trained_models/model-20171209-193942.h5 20 'ayakkabi'
 # python classifier.py train tr
 # python classifier.py test tr ../trained_models/model-20171209-193942.h5 10
