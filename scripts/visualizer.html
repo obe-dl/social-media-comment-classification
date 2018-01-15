@@ -1,0 +1,127 @@
+<!-- Adapted from Karpathy's code: http://karpathy.github.io/2015/05/21/rnn-effectiveness/ -->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>RNN vis</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.2/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.1/sprintf.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Cousine' rel='stylesheet' type='text/css'>
+
+    <style>
+        #wrap {
+            /* font-family: Courier, monospace; */
+            font-family: 'Cousine';
+            position: relative;
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        .d {
+            display: inline-block;
+            width: 20px;
+            /* font-weight: bold; */
+        }
+    </style>
+
+    <script>
+
+        function toColor3(v) {
+            // v is -1 to 1 initially
+            if (v > 0) {
+                var h = 200;
+                var s = "80%";
+                v = 1 - v; // invert so v = 0 is highest lightness (white)
+                var l = (Math.floor(v * 40) + 60) + '%';
+            } else {
+                var h = 0;
+                var s = "80%";
+                v = -v;
+                v = 1 - v; // invert too
+                var l = (Math.floor(v * 40) + 60) + '%';
+            }
+            var s = sprintf('hsl(%d,%s,%s)', h, s, l);
+            return s;
+        }
+
+        var showmore = false;
+
+        function render(div, data) {
+
+            div.html(''); // flush
+            for (var j = 0; j < data.length; j++) {
+                var curdata = data[j];
+                var endix = data[j].seq.length;
+                for (var i = 0; i < endix; i++) {
+                    var letter = curdata.seq[i];
+
+                    var e = curdata.pca[i][cc];
+
+                    var cole = toColor3(e);
+
+                    var css = 'background-color:' + cole;
+
+                    if (letter == ' ') {
+                        letter = 'a'; // ha, ha Justin trick
+                        css += ';color:' + cole;
+                    }
+                    if (letter == '\n') {
+                        css += ';display:block;'
+                    }
+
+                    if (i == 0) {
+                        div.append('br');
+                    }
+
+                    var dnew = div.append('div');
+                    dnew.attr('class', 'd')
+                        .attr('style', css)
+                        .html(letter);
+                }
+            }
+
+        }
+
+        function start() {
+            $.getJSON("cell.json", function (data) {
+                gdata = data.data; // store in global for debugging etc
+                render(d3.select("#vis"), gdata);
+            });
+        }
+
+        cc = 0;
+        function cycle() {
+            cc += 1;
+            $("#neuron").text(cc);
+            render(d3.select("#vis"), gdata);
+        }
+        function cycleb() {
+            cc -= 1;
+            $("#neuron").text(cc);
+            render(d3.select("#vis"), gdata);
+        }
+    </script>
+</head>
+
+<body onload="start();">
+    <div id="wrap">
+        <button onclick="cycleb()" style="width:100px; height:50px;">Cycle Back</button>
+        <button onclick="cycle()" style="width:100px; height:50px;">Cycle</button>
+        <div id="neuron">0</div>
+
+        <div id="vis">
+            hi
+        </div>
+    </div>
+</body>
+
+</html>
