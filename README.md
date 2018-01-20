@@ -72,9 +72,10 @@ To create word2vec model from corpus and visualize embeddings using t-SNE:
 | Republican/Democrat | LSTM | 0.7599 | 0.7706 | 0.7498 |
 
 ### Accuracy
+
 | Dataset | LSTM | GRU | CNN | Human |
 |---|---|---|---|---|
-|AKP/CHP | 82 | 80 | 75 | 75~ |
-|Republican/Democrat | 76 | - | 78 | - |
+| AKP/CHP | 82 | 80 | 75 | 75~ |
+| Republican/Democrat | 76 | - | 78 | - |
 
 Note: Human accuracy was calculated for a small subset of the data
