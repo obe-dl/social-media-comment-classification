@@ -31,6 +31,8 @@ To visualize cell activations for a given word:
     python classifier.py train tr
     python classifier.py test tr ../trained_models/model-20171209-193942.h5 10
 
+![alt text](images/neuron-1.png "Layer 2 Neuron 39 - Activations in several comments including ”osmanli”")
+
 ## CNN with word embeddings
 To train a CNN with word embeddings using comments as text files from the two groups with specified word vectors:
 
@@ -57,5 +59,25 @@ To create word2vec model from corpus and visualize embeddings using t-SNE:
 ### Example Usage
     python word2vec_tsne_plot.py ../datasets/trump-clinton/trump.txt ../datasets/trump-clinton/clinton.txt
 
+![alt text](images/tsne-turkish.png "t-SNE representation of word embeddings from turkish dataset.")
+
+
+# Results on Turkish and English Datasets
+
+| Dataset | Method | F1 Score | Precision | Recall |
+|---|---|---|---|---|
+| AKP/CHP | CNN | 0.7144 | 0.7953 | 0.6512 |
+| AKP/CHP | LSTM | 0.7963 | 0.8160 | 0.7778 |
+| Republican/Democrat | CNN | 0.7715 | 0.8052 | 0.7464 |
+| Republican/Democrat | LSTM | 0.7599 | 0.7706 | 0.7498 |
+
+
+### Accuracy
+| Dataset | LSTM | GRU | CNN | Human |
+|---|---|---|---|---|
+|AKP/CHP | 82 | 80 | 75 | 75~ |
+|Republican/Democrat | 76 | - | 78 | - |
+
+Note: Human accuracy was calculated for a small subset of the data
 
 
