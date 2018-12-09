@@ -1,4 +1,8 @@
 # Classification of User Comments into Social Media Groups with Opposing Views
+
+[Project Report](report.pdf)
+
+
 The goal of this project is classifying user comments into social media groups with opposing views. In the scope
 of this project, comments on Turkish and English pairs of Facebook pages are classified with Recurrent Neural Networks and Convolutional Neural Networks. This repository serves to provide code for study described in [report.pdf](report.pdf).
 
